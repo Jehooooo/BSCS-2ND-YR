@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 public class EnrollmentSystem {
@@ -9,10 +10,10 @@ public class EnrollmentSystem {
     private String[][] subjects;
     private int yearLevel;
     private boolean isEnrolled;
-    private static int listNumber = 1;
 
     // Main constructor
-    public EnrollmentSystem(String courseName, String studentName, String studentID, String[][] subjects, int yearLevel) {
+    public EnrollmentSystem(String courseName, String studentName, String studentID, String[][] subjects,
+            int yearLevel) {
         this.courseName = courseName;
         this.studentName = studentName;
         this.studentID = studentID;
@@ -21,8 +22,15 @@ public class EnrollmentSystem {
     }
 
     // ID generator
-    private static String generateID(int yearLevel, int listNumber) {
-        return String.format("241-%d-%03d", yearLevel, listNumber);
+    private static String generateID(int yearLevel) {
+
+        return String.format("241-%d-%03d", yearLevel, generateListNumber(yearLevel));
+    }
+
+    public static int generateListNumber(int yearLevel) {
+        Random random = new Random();
+        int listNumber = random.nextInt(9999 + 1); // Generates a random number between
+        return listNumber; // Placeholder for actual logic
     }
 
     // Enroll method (interactive)
@@ -36,35 +44,55 @@ public class EnrollmentSystem {
         int year = Integer.parseInt(JOptionPane.showInputDialog("Enter Year Level:"));
         this.yearLevel = year;
 
-        this.studentID = generateID(yearLevel, listNumber++);
+        this.studentID = generateID(yearLevel); // Assuming listNumber starts at 0 for simplicity
         this.isEnrolled = true;
     }
 
+    //Save to File
+    private void saveToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("enrolledStudents.txt", true))) {
+            writer.write("Course: " + this.courseName.toUpperCase()+"\n");
+            writer.write("Student Name: " + this.studentName.toUpperCase()+"\n");
+            writer.write("Student ID: " + this.studentID+"\n");
+            writer.write("Year Level: " + this.yearLevel+"\n");
+            writer.write("Subjects:");
+            for (String[] subject : subjects) {
+                writer.newLine();
+                writer.write(subject[0] + " (" + subject[1] + ")");
+            }
+            writer.newLine();
+            writer.newLine(); // Add an extra line for separation
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     // Main Method
     public static void main(String[] args) {
+
         String[][] subjects = { { "Math", "CS101" }, { "Physics", "CS102" } };
 
         EnrollmentSystem enrollment = new EnrollmentSystem("", "", "", subjects, 0);
         enrollment.enrollStudent();
 
-        JOptionPane.showMessageDialog(null, "Enrollment Successful!\n" +
-                "Course: " + enrollment.courseName + "\n" +
-                "Student Name: " + enrollment.studentName + "\n" +
-                "Student ID: " + enrollment.studentID);
-        
-        //SAVE THE ENROLLED STUDENT TO A FILE
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("enrolledStudents.txt", true))) {
-            writer.write("Course: " + enrollment.courseName + "\n");
-            writer.write("Student Name: " + enrollment.studentName + "\n");
-            writer.write("Student ID: " + enrollment.studentID + "\n");
-            writer.write("Year Level: " + enrollment.yearLevel + "\n");
-            writer.write("Subjects:\n");
-            for (String[] subject : enrollment.subjects) {
-                writer.write(subject[0] + " (" + subject[1] + ")\n");
-            }
-            writer.write("\n");
-        } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
-        }
+
+        enrollment.saveToFile();
+        enrollment.askAgain(); // Ask if the user wants to enroll another student
+
+
+    }
+    //ask again
+    public void askAgain() {
+            String [] options = { "Yes", "No" };
+            int choice = JOptionPane.showOptionDialog(null, "Do you want to enroll another student?", "Enrollment System",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+                    if (choice == 0) {
+                        enrollStudent();
+                        saveToFile();
+                        askAgain(); // Recursively ask again
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Thank you for using the Enrollment System!");
+                    }
     }
 }
+
