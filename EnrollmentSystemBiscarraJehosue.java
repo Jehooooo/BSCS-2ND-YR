@@ -1,10 +1,8 @@
 //I STARTED THIS CODE 6DAYS BEFORE(Commits on Jul 24, 2025) THE ACTIVITY WAS GIVEN, AND I FINISHED IT 1 DAY BEFORE THE ACTIVITY DEADLINE
-//I SPENT 8 DAYS EDITING THE CODE
+//I SPENT 8 DAYS TO COMPLETE THIS PROJECT, AND I AM PROUD OF IT
 //I GIVE MY SELF 3 WEEKS DEADLINE TO FINISH THIS PROJECT OF MINE BUT I FINISHED IT IN 8 DAYS
 //THIS WAS SUPPOSED TO BE IN A GUI, BUT I DECIDED TO USE A CONSOLE APPLICATION INSTEAD. BECAUSE I AM NOT GOOD AT GUI YET
 //I AM USING JOptionPane FOR THE INPUTS AND OUTPUTS, AND BufferedReader FOR RE
-
-//I AM JEHOSUE BISCARRA, A 2ND YEAR COMPUTER SCIENCE STUDENT ASPIRING TO BE A SOFTWARE ENGINEER
 //THIS IS MY ENROLLMENT SYSTEM PERSONAL PROJECT, AND I HOPE YOU LIKE IT🫶🫶💛
 
 import java.io.*;
@@ -12,16 +10,17 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 public class EnrollmentSystemBiscarraJehosue {
-    private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in)); //This has no part in the code, but it is used to read input from the console
+    private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in)); // This has no part in the code, but it is used to read input from the console
     private String courseName;
     private String studentName;
     private String studentID;
     private String[] subjects; // Only the selected year-level subjects
-    private int yearLevel;
+    private int yearLevel;  
     private boolean isEnrolled = false; // Track if the student is already enrolled
 
     // All subjects grouped by year level
     private static final String[][] allSubjects = {
+        
             { // 1st Year
                     "Introduction to Computing",
                     "Computer Programming 1 (Fundamentals)",
@@ -56,20 +55,23 @@ public class EnrollmentSystemBiscarraJehosue {
     };
 
     // Constructor
-    public EnrollmentSystemBiscarraJehosue(String courseName, String studentName, String studentID, String[] subjects, int yearLevel) {
+    public EnrollmentSystemBiscarraJehosue(String courseName, String studentName, String studentID, String[] subjects,
+            int yearLevel) {
         this.courseName = courseName;
         this.studentName = studentName;
         this.studentID = studentID;
         this.subjects = subjects;
         this.yearLevel = yearLevel;
+        
     }
 
     // ID number generator
     private static String generateID(int yearLevel) {
-        //Gagamit sana ako ng HashSet to prevent duplication sa Unique ID number, pero hindi naman ata mag duduplicate kapag kunti lang studyante hehe
+        // Gagamit sana ako ng HashSet to prevent duplication sa Unique ID number, pero
+        // hindi naman ata mag duduplicate kapag kunti lang studyante hehe
         return String.format("241-%d-%03d", yearLevel, generateListNumber(yearLevel));
     }
-
+    // Generate a random number for the list number
     public static int generateListNumber(int yearLevel) {
         Random random = new Random();
         return random.nextInt(9999 + 1); // 0000 to 9999
@@ -93,7 +95,7 @@ public class EnrollmentSystemBiscarraJehosue {
                 break;
             }
             if (courseName == null) {
-                System.exit(0); 
+                System.exit(0);
             }
         }
 
@@ -109,14 +111,14 @@ public class EnrollmentSystemBiscarraJehosue {
                 break;
             }
             if (studentName == null) {
-                System.exit(0); 
+                System.exit(0);
             }
         }
         int year = 0;
         while (year < 1 || year > 4) {
             String input = JOptionPane.showInputDialog("Enter Year Level (1-4):");
             if (input == null) {
-                System.exit(0); 
+                System.exit(0);
             }
             try {
                 year = Integer.parseInt(input);
@@ -140,7 +142,7 @@ public class EnrollmentSystemBiscarraJehosue {
 
     // Save to File
     private void saveToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("enrolledStudents.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("enrolledStudents.txt" , true))) {
             writer.write("Course: " + courseName.toUpperCase() + "\n");
             writer.write("Student Name: " + studentName.toUpperCase() + "\n");
             writer.write("Student ID: " + studentID + "\n");
