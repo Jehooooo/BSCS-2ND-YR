@@ -1,5 +1,0 @@
-Rank | Name     | Average
----------------------------
-1          | Bianca   | 89.33
-2          | Charles  | 88.00
-3          | Alex     | 87.33
