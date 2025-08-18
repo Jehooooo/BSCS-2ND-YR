@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import java.util.Random;
 import javax.swing.*;
 public abstract class VehicleRentalManagementSystem {
@@ -64,3 +65,60 @@ public abstract class VehicleRentalManagementSystem {
     }
     
 }
+=======
+
+import javax.swing.*;
+
+public abstract class VehicleRentalManagementSystem {
+    private String licensePlate;
+    private String brand;
+    private String model;
+    private double rentalPricePerDay;
+
+    public void inputVehicleDetails() {
+        String plate = JOptionPane.showInputDialog("Enter Vehicle License Plate:");
+
+    }
+    /*public VehicleRentalManagementSystem(String licensePlate, String brand, String model, double rentalPricePerDay) {
+        this.licensePlate = licensePlate;
+        this.brand = brand;
+        this.model = model;
+        this.rentalPricePerDay = rentalPricePerDay;
+    }*/
+
+
+
+    public void MainFunctions() {
+        JOptionPane.showMessageDialog(null, "Welcome to the Vehicle Rental Management System!");
+        String[] options = {"1. Rent a Vehicle", "2. Return a Vehicle", "3. View Available Vehicles", "4. Exit"};
+        int choice = JOptionPane.showOptionDialog(null, "Choose an option:", "Vehicle Rental Management",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+        switch (choice) {
+            case 1:
+                inputVehicleDetails();
+                break;
+            case 2:
+                // Logic for viewing available vehicles can be added here
+                break;
+            case 3:
+                // Logic for viewing available vehicles can be added here
+                break;
+            case 4:
+                // Logic for viewing available vehicles can be added here
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Exiting the system. Thank you!");
+        }
+    }
+
+    public static void main(String[] args) {
+        VehicleRentalManagementSystem system = new VehicleRentalManagementSystem() {
+            // Anonymous class to implement the abstract class
+        };
+        system.MainFunctions();
+
+    }
+
+}
+>>>>>>> 0411413 (UPDATE)
